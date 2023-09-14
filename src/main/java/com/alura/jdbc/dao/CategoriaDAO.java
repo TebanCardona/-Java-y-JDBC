@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,30 @@ public class CategoriaDAO {
 
   public CategoriaDAO(Connection con) {
     this.con = con;
+  }
+
+  public void guardar(Categoria categoria) {
+    try {
+      PreparedStatement statement;
+      statement = con.prepareStatement("Insert INTO category"
+          + "(name)"
+          + "VALUES (?)",
+          Statement.RETURN_GENERATED_KEYS);
+      try (statement) {
+        statement.setString(1, categoria.toString());
+        statement.execute();
+
+        final ResultSet resultSet = statement.getGeneratedKeys();
+        try (resultSet) {
+          while (resultSet.next()) {
+            System.out.println(String.format("Fue insertado el producto: %s", categoria));
+          }
+        }
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return;
   }
 
   public List<Categoria> listar() {

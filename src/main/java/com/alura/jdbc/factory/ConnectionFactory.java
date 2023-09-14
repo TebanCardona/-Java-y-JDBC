@@ -13,7 +13,6 @@ public class ConnectionFactory {
 
   public ConnectionFactory() {
     Dotenv dotenv = Dotenv.load();
-    System.out.println(dotenv.get("USER"));
     var comboPooledDataSource = new ComboPooledDataSource();
     comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost/stock_products?useTimeZone=true&serverTimeZone=UTC");
     comboPooledDataSource.setUser(dotenv.get("USER"));

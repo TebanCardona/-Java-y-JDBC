@@ -8,19 +8,24 @@ import com.alura.jdbc.modelo.Categoria;
 
 public class CategoriaController {
 
-    private CategoriaDAO categoriaDAO;
+  private CategoriaDAO categoriaDAO;
 
-    public CategoriaController() {
-        var factory = new ConnectionFactory();
-        this.categoriaDAO = new CategoriaDAO(factory.recuperaConexion());
-    }
+  public CategoriaController() {
+    var factory = new ConnectionFactory();
+    this.categoriaDAO = new CategoriaDAO(factory.recuperaConexion());
+  }
 
-    public List<Categoria> listar() {
-        return this.categoriaDAO.listar();
-    }
+  public void agregar(Categoria categoria) {
+    this.categoriaDAO.guardar(categoria);
+    return;
+  }
 
-    public List<Categoria> cargaReporte() {
-        return this.categoriaDAO.listarConProductos();
-    }
+  public List<Categoria> listar() {
+    return this.categoriaDAO.listar();
+  }
+
+  public List<Categoria> cargaReporte() {
+    return this.categoriaDAO.listarConProductos();
+  }
 
 }

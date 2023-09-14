@@ -56,7 +56,8 @@ public class ProductoDAO {
 
     try {
       final PreparedStatement statement = con
-          .prepareStatement("SELECT id_product, name, description, quantity FROM product");
+          .prepareStatement(
+              "SELECT P.id_product, P.name, P.description, P.quantity, C.name FROM product AS P JOIN category AS C ON C.id_category = P.id_category ");
 
       try (statement) {
         statement.execute();
@@ -66,10 +67,11 @@ public class ProductoDAO {
         try (resultSet) {
           while (resultSet.next()) {
             resultado.add(new Producto(
-                resultSet.getInt("id_product"),
-                resultSet.getString("name"),
-                resultSet.getString("description"),
-                resultSet.getInt("quantity")));
+                resultSet.getInt("P.id_product"),
+                resultSet.getString("P.name"),
+                resultSet.getString("P.description"),
+                resultSet.getInt("P.quantity"),
+                resultSet.getString("C.name")));
           }
         }
       }
